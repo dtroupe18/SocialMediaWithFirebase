@@ -24,6 +24,7 @@
 		55147F711ED64CB800724F86 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55147F701ED64CB800724F86 /* UserCell.swift */; };
 		55147F731ED64E0200724F86 /* UsersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55147F721ED64E0200724F86 /* UsersViewController.swift */; };
 		55147F781ED6509300724F86 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55147F771ED6509300724F86 /* User.swift */; };
+		55147F7A1ED7093900724F86 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55147F791ED7093900724F86 /* UploadViewController.swift */; };
 		D4CF405DA0AA6C24806562CA /* Pods_FakeInstagramTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2949396661948EB18E05B8EB /* Pods_FakeInstagramTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,7 @@
 		55147F701ED64CB800724F86 /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		55147F721ED64E0200724F86 /* UsersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersViewController.swift; sourceTree = "<group>"; };
 		55147F771ED6509300724F86 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		55147F791ED7093900724F86 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		662CB06D5BE0E785E744E8E0 /* Pods-FakeInstagramUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeInstagramUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FakeInstagramUITests/Pods-FakeInstagramUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		7DBA3D99526F92E5BEA1BF1C /* Pods_FakeInstagramUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FakeInstagramUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B285B34AB44841ED9DE4A038 /* Pods-FakeInstagramTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeInstagramTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FakeInstagramTests/Pods-FakeInstagramTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				55147F6C1ED5BA3300724F86 /* SignUpViewController.swift */,
 				55147F6E1ED5F11900724F86 /* LoginViewController.swift */,
 				55147F721ED64E0200724F86 /* UsersViewController.swift */,
+				55147F791ED7093900724F86 /* UploadViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55147F6F1ED5F11900724F86 /* LoginViewController.swift in Sources */,
+				55147F7A1ED7093900724F86 /* UploadViewController.swift in Sources */,
 				55147F731ED64E0200724F86 /* UsersViewController.swift in Sources */,
 				55147F6D1ED5BA3300724F86 /* SignUpViewController.swift in Sources */,
 				55147F3D1ED4FF4700724F86 /* ViewController.swift in Sources */,

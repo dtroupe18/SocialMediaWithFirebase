@@ -22,26 +22,21 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginPressed(_ sender: Any) {
         guard emailField.text != "", passwordField.text != "" else {
-            // Alert error message 
-            let alertController = UIAlertController(title: "Error", message: "Please enter an email and password.", preferredStyle: .alert)
-            
-            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertController.addAction(defaultAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-            
+            // Alert error message
+            self.displayAlert(title: "Error", message: "Please enter an email and password.")
             return
         }
         
         Auth.auth().signIn(withEmail: emailField.text!, password: passwordField.text!, completion: {(user, error) in
             
             if let error = error {
-                print(error.localizedDescription)
+                // alert user of the error
+                self.displayAlert(title: "Login Error", message: error.localizedDescription)
+                // print(error.localizedDescription)
             }
             
-            if let user = user {
+            if user != nil {
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "userVC")
-                
                 self.present(vc, animated: true, completion: nil)
             }
         })
@@ -50,6 +45,16 @@ class LoginViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    func displayAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alertController.addAction(defaultAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
 

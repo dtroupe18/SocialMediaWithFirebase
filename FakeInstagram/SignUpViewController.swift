@@ -60,13 +60,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         // make sure everything is filled out
         guard nameField.text != "", emailField.text != "", password.text != "", confirmPassword.text != "" else {
             // alert
-            let alertController = UIAlertController(title: "Error", message: "Please enter all of the required fields", preferredStyle: .alert)
-            
-            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertController.addAction(defaultAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-
+            displayAlert(title: "Error", message: "Please enter all of the required fields")
             return
         }
         
@@ -122,14 +116,17 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             
         else {
             // alert
-            let alertController = UIAlertController(title: "Error", message: "Passwords do not match", preferredStyle: .alert)
-            
-            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-            alertController.addAction(defaultAction)
-            
-            self.present(alertController, animated: true, completion: nil)
-
+            self.displayAlert(title: "Error", message: "Passwords do not match")
         }
+    }
+    
+    func displayAlert(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alertController.addAction(defaultAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
     

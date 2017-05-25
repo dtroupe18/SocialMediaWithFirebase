@@ -58,7 +58,9 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         let uploadTask = imageRef.putData(data!, metadata: nil) { (metadata, error) in
             if error != nil {
                 AppDelegate.instance().dismissActivityIndicator()
-                self.displayAlert(title: "Upload Error", message: (error?.localizedDescription)!)
+                if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
+                    Helper.showAlertMessage(vc: vc, title: "Upload Error", message: (error?.localizedDescription)!)
+                }
                 return
             }
             
@@ -80,14 +82,4 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
         uploadTask.resume()
     }
-    
-    func displayAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertController.addAction(defaultAction)
-        
-        self.present(alertController, animated: true, completion: nil)
-    }
-
 }

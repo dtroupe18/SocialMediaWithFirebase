@@ -60,7 +60,9 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         // make sure everything is filled out
         guard nameField.text != "", emailField.text != "", password.text != "", confirmPassword.text != "" else {
             // alert
-            displayAlert(title: "Error", message: "Please enter all of the required fields")
+            if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
+                Helper.showAlertMessage(vc: vc, title: "Error", message: "Please enter all of the required fields")
+            }
             return
         }
         
@@ -116,23 +118,12 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             
         else {
             // alert
-            self.displayAlert(title: "Error", message: "Passwords do not match")
+            if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
+                Helper.showAlertMessage(vc: vc, title: "Error", message: "Passwords do not match")
+            }
         }
     }
     
-    func displayAlert(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertController.addAction(defaultAction)
-        
-        self.present(alertController, animated: true, completion: nil)
-    }
-    
-    
-    
-    
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

@@ -11,7 +11,6 @@ import Firebase
 
 class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    
     @IBOutlet weak var previewImage: UIImageView!
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var selectImage: UIButton!

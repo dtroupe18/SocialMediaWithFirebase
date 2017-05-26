@@ -67,6 +67,12 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                                 posst.postID = postID
                                                 posst.userID = userID
                                                 
+                                                if let people = post["peopleWhoLike"] as? [String: AnyObject] {
+                                                    for(_, person) in people {
+                                                        posst.peopleWhoLike.append(person as! String)
+                                                    }
+                                                }
+                                                
                                                 self.posts.append(posst)
                                             }
                                         }
@@ -100,6 +106,14 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage)
         cell.authorLabel.text = self.posts[indexPath.row].author
         cell.likeLabel.text = "\(self.posts[indexPath.row].likes!) Likes"
+        cell.postID = self.posts[indexPath.row].postID
+        
+        for person in self.posts[indexPath.row].peopleWhoLike {
+            if person == Auth.auth().currentUser!.uid {
+                cell.likeButton.isHidden = true
+                cell.unlikeButton.isHidden = false
+            }
+        }
         
         
         return cell

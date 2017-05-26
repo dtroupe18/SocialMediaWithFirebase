@@ -15,5 +15,7 @@ class Post: NSObject {
     var pathToImage: String!
     var userID: String!
     var postID: String!
+    
+    var peopleWhoLike: [String] = [String]()
 
 }

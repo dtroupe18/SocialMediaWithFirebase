@@ -67,6 +67,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
         
         if password.text == confirmPassword.text {
+            AppDelegate.instance().showActivityIndicator()
             Auth.auth().createUser(withEmail: emailField.text!, password: password.text!, completion: { (user, error) in
             
                 if let error = error {
@@ -103,6 +104,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 self.ref.child("users").child(user.uid).setValue(userInfo)
                                 
                                 // differeny way to segue to another viewController
+                                AppDelegate.instance().dismissActivityIndicator()
                                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "userVC")
                                 
                                 self.present(vc, animated: true, completion: nil)

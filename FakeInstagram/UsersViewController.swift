@@ -131,10 +131,21 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     
     @IBAction func logOutPressed(_ sender: Any) {
-        
+        // sign out the current user and segue back to sign in vc
+        do {
+            try Auth.auth().signOut()
+            print(Auth.auth().currentUser?.uid ?? "No user")
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "loginVC")
+            self.present(vc, animated: true, completion: nil)
+        }
+        catch let error as NSError {
+            if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
+                Helper.showAlertMessage(vc: vc, title: "Sign out error", message: error.localizedDescription)
+            }
+        }
     }
-    
 }
+
 
 extension UIImageView {
     

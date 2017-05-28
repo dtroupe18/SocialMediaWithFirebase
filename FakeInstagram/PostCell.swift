@@ -27,7 +27,7 @@ class PostCell: UICollectionViewCell {
         let keyToPost = ref.child("posts").childByAutoId().key
         
         ref.child("posts").child(self.postID).observeSingleEvent(of: .value, with: { snapshot in
-            if let post = snapshot.value as? [String: AnyObject] {
+            if (snapshot.value as? [String: AnyObject]) != nil {
                 let updateLikes: [String: Any] = ["peopleWhoLike/\(keyToPost)" : Auth.auth().currentUser!.uid]
                 ref.child("posts").child(self.postID).updateChildValues(updateLikes, withCompletionBlock: { (error, reff) in
                     if error == nil {

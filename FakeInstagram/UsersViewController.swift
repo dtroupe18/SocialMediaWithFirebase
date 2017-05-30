@@ -45,7 +45,6 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
                             userToShow.userID = uid
                             
                             self.users.append(userToShow)
-                            
                         }
                     }
                 }

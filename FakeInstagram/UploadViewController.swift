@@ -48,6 +48,12 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     
     @IBAction func postPressed(_ sender: Any) {
+        if postText.text! == "" {
+            if let topController = UIApplication.topViewController() {
+                Helper.showAlertMessage(vc: topController, title: "Error", message: ("All posts must contain a description"))
+            }
+            return
+        }
         AppDelegate.instance().showActivityIndicator()
         
         let uid = Auth.auth().currentUser!.uid
@@ -62,8 +68,8 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         let uploadTask = imageRef.putData(data!, metadata: nil) { (metadata, error) in
             if error != nil {
                 AppDelegate.instance().dismissActivityIndicator()
-                if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
-                    Helper.showAlertMessage(vc: vc, title: "Upload Error", message: (error?.localizedDescription)!)
+                if let topController = UIApplication.topViewController() {
+                    Helper.showAlertMessage(vc: topController, title: "Upload Error", message: (error?.localizedDescription)!)
                 }
                 return
             }
@@ -74,7 +80,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 "pathToImage": url.absoluteString,
                                 "likes": 0,
                                 "author": Auth.auth().currentUser!.displayName!,
-                                "postDescription": self.postText.text ?? "No Description",
+                                "postDescription": self.postText.text!,
                                 "timestamp": [".sv": "timestamp"],
                                 "postID": key] as [String: Any]
                     

@@ -21,7 +21,6 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchPosts()
-
     }
     
     func fetchPosts() {
@@ -45,34 +44,23 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         self.following.append(Auth.auth().currentUser!.uid)
                         
                         ref.child("posts").queryOrderedByKey().observeSingleEvent(of: .value, with: { snap in
-                            let postsSnap = snap.value as! [String: AnyObject]
+                            let postsSnap = snap.value as? [String: AnyObject]
                             
-                            for(_, post) in postsSnap {
+                            for(_, post) in postsSnap! {
                                 if let userID = post["userID"] as? String {
                                     for each in self.following {
                                         if each == userID {
                                             let posst = Post()
                                             
-                                            if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
+                                            if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let postDescription = post["postDescription"] as? String, let timestamp = post["timestamp"] as? Double {
                                                 
                                                 posst.author = author
                                                 posst.likes = likes
                                                 posst.pathToImage = pathToImage
                                                 posst.postID = postID
                                                 posst.userID = userID
-                                                
-                                                // because not all posts have a descirption right now
-                                                // change to be included in the above "if let"
-                                                if let postDescription = post["postDescription"] as? String {
-                                                    posst.postDescription = author + ": " + postDescription
-                                                }
-                                                
-                                                // timestamp stuff
-                                                if let timestamp = post["timestamp"] as? Double {
-                                                    print("\n\n\nTIMESTAMP AS STRING................")
-                                                    posst.timestamp = String(timestamp)
-                                                }
-                                                
+                                                posst.postDescription = author + ": " + postDescription
+                                                posst.timestamp = timestamp
                                                 
                                                 if let people = post["peopleWhoLike"] as? [String: AnyObject] {
                                                     for(_, person) in people {
@@ -109,17 +97,15 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "postCell", for: indexPath) as! PostCell
         
+        self.posts.sort(by: {$0.timestamp > $1.timestamp})
         // creating a cell....
         cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage)
-        cell.authorLabel.text = self.posts[indexPath.row].author
-        cell.likeLabel.text = "\(self.posts[indexPath.row].likes!) Likes"
+        // cell.authorLabel.text = self.posts[indexPath.row].author
+        cell.likeLabel.text = "\(self.posts[indexPath.row].likes!) Helpful"
         cell.postID = self.posts[indexPath.row].postID
-        cell.postDescription.text = self.posts[indexPath.row].postDescription ?? "No Description"
-        if self.posts[indexPath.row].timestamp != nil {
-            print("\n\n\n\n PASSED IF........")
-            // cell.timeStamp.text = "FAKE AF"
-            cell.timeStamp.text = convertTimestamp(serverTimestamp: self.posts[indexPath.row].timestamp!)
-        }
+        cell.postDescription.text = self.posts[indexPath.row].postDescription!
+        cell.timeStamp.text = convertTimestamp(serverTimestamp: self.posts[indexPath.row].timestamp!)
+        
         
         for person in self.posts[indexPath.row].peopleWhoLike {
             if person == Auth.auth().currentUser!.uid {
@@ -130,9 +116,9 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         return cell
     }
-    
-    func convertTimestamp(serverTimestamp: String) -> String {
-        let x = Double(serverTimestamp)! / 1000
+        
+    func convertTimestamp(serverTimestamp: Double) -> String {
+        let x = serverTimestamp / 1000
         let date = NSDate(timeIntervalSince1970: x)
         let formatter = DateFormatter()
         formatter.dateStyle = .long

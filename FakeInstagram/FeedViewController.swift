@@ -25,7 +25,6 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func fetchPosts() {
-        print("FETCH POSTS CALLED")
         // each user has some set of people they are following
         // we need to get the posts for all of those users
         // for each check if the user is someone we are following
@@ -53,19 +52,27 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                     for each in self.following {
                                         if each == userID {
                                             let posst = Post()
-                                            print("EMPTY POST MADE!")
-                                            print("author", post["author"])
-                                            print("likes", post["likes"])
-                                            print("pathToImage", post["pathToImage"])
-                                            print("postID", post["postID"])
+                                            
                                             if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String {
-                                                print("IF LET PASSED")
                                                 
                                                 posst.author = author
                                                 posst.likes = likes
                                                 posst.pathToImage = pathToImage
                                                 posst.postID = postID
                                                 posst.userID = userID
+                                                
+                                                // because not all posts have a descirption right now
+                                                // change to be included in the above "if let"
+                                                if let postDescription = post["postDescription"] as? String {
+                                                    posst.postDescription = author + ": " + postDescription
+                                                }
+                                                
+                                                // timestamp stuff
+                                                if let timestamp = post["timestamp"] as? Double {
+                                                    print("\n\n\nTIMESTAMP AS STRING................")
+                                                    posst.timestamp = String(timestamp)
+                                                }
+                                                
                                                 
                                                 if let people = post["peopleWhoLike"] as? [String: AnyObject] {
                                                     for(_, person) in people {
@@ -107,6 +114,12 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.authorLabel.text = self.posts[indexPath.row].author
         cell.likeLabel.text = "\(self.posts[indexPath.row].likes!) Likes"
         cell.postID = self.posts[indexPath.row].postID
+        cell.postDescription.text = self.posts[indexPath.row].postDescription ?? "No Description"
+        if self.posts[indexPath.row].timestamp != nil {
+            print("\n\n\n\n PASSED IF........")
+            // cell.timeStamp.text = "FAKE AF"
+            cell.timeStamp.text = convertTimestamp(serverTimestamp: self.posts[indexPath.row].timestamp!)
+        }
         
         for person in self.posts[indexPath.row].peopleWhoLike {
             if person == Auth.auth().currentUser!.uid {
@@ -115,9 +128,16 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
         
-        
         return cell
     }
-
-   
+    
+    func convertTimestamp(serverTimestamp: String) -> String {
+        let x = Double(serverTimestamp)! / 1000
+        let date = NSDate(timeIntervalSince1970: x)
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .medium
+        
+        return formatter.string(from: date as Date)
+    }
 }

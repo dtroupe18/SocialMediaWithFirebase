@@ -10,7 +10,6 @@
 		2AFEC09EE68B3C715DE71FB0 /* Pods_FakeInstagramUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DBA3D99526F92E5BEA1BF1C /* Pods_FakeInstagramUITests.framework */; };
 		35E0C70B822A0781DB3062F1 /* Pods_FakeInstagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEC4324C9368584438648A3D /* Pods_FakeInstagram.framework */; };
 		55147F3B1ED4FF4700724F86 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55147F3A1ED4FF4700724F86 /* AppDelegate.swift */; };
-		55147F3D1ED4FF4700724F86 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55147F3C1ED4FF4700724F86 /* ViewController.swift */; };
 		55147F401ED4FF4700724F86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55147F3E1ED4FF4700724F86 /* Main.storyboard */; };
 		55147F421ED4FF4700724F86 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55147F411ED4FF4700724F86 /* Assets.xcassets */; };
 		55147F451ED4FF4700724F86 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55147F431ED4FF4700724F86 /* LaunchScreen.storyboard */; };
@@ -26,7 +25,6 @@
 		55147F781ED6509300724F86 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55147F771ED6509300724F86 /* User.swift */; };
 		55147F7A1ED7093900724F86 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55147F791ED7093900724F86 /* UploadViewController.swift */; };
 		55147F7C1ED73A9900724F86 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55147F7B1ED73A9900724F86 /* Helper.swift */; };
-		55ED602C1ED85AB6006F9CA0 /* NewsFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED602B1ED85AB6006F9CA0 /* NewsFeedCell.swift */; };
 		55ED602E1ED85AEA006F9CA0 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED602D1ED85AEA006F9CA0 /* PostCell.swift */; };
 		55ED60301ED85CB7006F9CA0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED602F1ED85CB7006F9CA0 /* Post.swift */; };
 		55ED60321ED85D3F006F9CA0 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED60311ED85D3F006F9CA0 /* FeedViewController.swift */; };
@@ -57,7 +55,6 @@
 		3566A548AF8FBFBA675C0AE3 /* Pods-FakeInstagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FakeInstagram.release.xcconfig"; path = "Pods/Target Support Files/Pods-FakeInstagram/Pods-FakeInstagram.release.xcconfig"; sourceTree = "<group>"; };
 		55147F371ED4FF4700724F86 /* FakeInstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FakeInstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55147F3A1ED4FF4700724F86 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		55147F3C1ED4FF4700724F86 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		55147F3F1ED4FF4700724F86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		55147F411ED4FF4700724F86 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55147F441ED4FF4700724F86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -76,7 +73,6 @@
 		55147F771ED6509300724F86 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		55147F791ED7093900724F86 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
 		55147F7B1ED73A9900724F86 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
-		55ED602B1ED85AB6006F9CA0 /* NewsFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedCell.swift; sourceTree = "<group>"; };
 		55ED602D1ED85AEA006F9CA0 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		55ED602F1ED85CB7006F9CA0 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		55ED60311ED85D3F006F9CA0 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -175,7 +171,6 @@
 		55147F741ED6504300724F86 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				55147F3C1ED4FF4700724F86 /* ViewController.swift */,
 				55147F6C1ED5BA3300724F86 /* SignUpViewController.swift */,
 				55147F6E1ED5F11900724F86 /* LoginViewController.swift */,
 				55147F721ED64E0200724F86 /* UsersViewController.swift */,
@@ -189,7 +184,6 @@
 			isa = PBXGroup;
 			children = (
 				55147F701ED64CB800724F86 /* UserCell.swift */,
-				55ED602B1ED85AB6006F9CA0 /* NewsFeedCell.swift */,
 				55ED602D1ED85AEA006F9CA0 /* PostCell.swift */,
 			);
 			name = CustomCell;
@@ -514,13 +508,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55ED602C1ED85AB6006F9CA0 /* NewsFeedCell.swift in Sources */,
 				55147F6F1ED5F11900724F86 /* LoginViewController.swift in Sources */,
 				55147F7A1ED7093900724F86 /* UploadViewController.swift in Sources */,
 				55ED60301ED85CB7006F9CA0 /* Post.swift in Sources */,
 				55147F731ED64E0200724F86 /* UsersViewController.swift in Sources */,
 				55147F6D1ED5BA3300724F86 /* SignUpViewController.swift in Sources */,
-				55147F3D1ED4FF4700724F86 /* ViewController.swift in Sources */,
 				55147F7C1ED73A9900724F86 /* Helper.swift in Sources */,
 				55147F711ED64CB800724F86 /* UserCell.swift in Sources */,
 				55ED602E1ED85AEA006F9CA0 /* PostCell.swift in Sources */,

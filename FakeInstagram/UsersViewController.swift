@@ -134,7 +134,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         // sign out the current user and segue back to sign in vc
         do {
             try Auth.auth().signOut()
-            print(Auth.auth().currentUser?.uid ?? "No user")
+            // print(Auth.auth().currentUser?.uid ?? "No user")
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "loginVC")
             self.present(vc, animated: true, completion: nil)
         }

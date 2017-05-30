@@ -117,29 +117,11 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                 }
             })
         }
-            
         else {
             // alert
             if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
                 Helper.showAlertMessage(vc: vc, title: "Error", message: "Passwords do not match")
             }
         }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    }    
 }

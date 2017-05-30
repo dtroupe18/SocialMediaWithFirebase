@@ -14,13 +14,18 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var previewImage: UIImageView!
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var selectImage: UIButton!
+    @IBOutlet weak var postText: UITextView!
+    
     
     var picker = UIImagePickerController()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // style text view
+        styleTextView()
+       
         picker.delegate = self
     }
 
@@ -69,6 +74,8 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 "pathToImage": url.absoluteString,
                                 "likes": 0,
                                 "author": Auth.auth().currentUser!.displayName!,
+                                "postDescription": self.postText.text ?? "No Description",
+                                "timestamp": [".sv": "timestamp"],
                                 "postID": key] as [String: Any]
                     
                     let postFeed = ["\(key)" : feed]
@@ -80,5 +87,14 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
             })
         }
         uploadTask.resume()
+    }
+    
+    
+    func styleTextView() {
+        let borderColor = UIColor.init(red: 212/255, green: 212/255, blue: 212/255, alpha: 0.5)
+        
+        self.postText.layer.borderColor = borderColor.cgColor
+        self.postText.layer.borderWidth = 0.8
+        self.postText.layer.cornerRadius = 5
     }
 }

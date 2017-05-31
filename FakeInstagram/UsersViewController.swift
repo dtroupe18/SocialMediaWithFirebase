@@ -51,7 +51,6 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
             }
             self.tableView.reloadData()
         })
-        
         ref.removeAllObservers()
     }
     
@@ -163,20 +162,4 @@ extension UIImageView {
         }
         task.resume()
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

@@ -15,6 +15,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
     @IBOutlet weak var collectionView: UICollectionView!
     
+    
     var posts = [Post]()
     var following = [String]()
     
@@ -23,6 +24,8 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         fetchPosts()
     }
     
+    
+        
     func fetchPosts() {
         // each user has some set of people they are following
         // we need to get the posts for all of those users
@@ -106,6 +109,11 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.postDescription.text = self.posts[indexPath.row].postDescription!
         cell.timeStamp.text = convertTimestamp(serverTimestamp: self.posts[indexPath.row].timestamp!)
         
+        // place more button in post cell if the text is too long
+        if  cell.postDescription.isTruncated() {
+            cell.moreText.isHidden = false
+        }
+
         
         for person in self.posts[indexPath.row].peopleWhoLike {
             if person == Auth.auth().currentUser!.uid {
@@ -116,7 +124,8 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         return cell
     }
-        
+    
+
     func convertTimestamp(serverTimestamp: Double) -> String {
         let x = serverTimestamp / 1000
         let date = NSDate(timeIntervalSince1970: x)

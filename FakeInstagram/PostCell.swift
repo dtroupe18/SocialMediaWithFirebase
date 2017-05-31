@@ -17,7 +17,7 @@ class PostCell: UICollectionViewCell {
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var postDescription: UILabel!
     @IBOutlet weak var timeStamp: UILabel!
-    
+    @IBOutlet weak var moreText: UIButton!
     
     var postID: String!
     
@@ -91,6 +91,6 @@ class PostCell: UICollectionViewCell {
             }
         })
         ref.removeAllObservers()
-    }
+    }    
 }
 

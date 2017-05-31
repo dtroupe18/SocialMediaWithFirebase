@@ -35,3 +35,23 @@ extension UIApplication {
         return controller
     }
 }
+
+extension UILabel {
+    
+    func isTruncated() -> Bool {
+        
+        if let string = self.text {
+            
+            let size: CGSize = (string as NSString).boundingRect(
+                with: CGSize(width: self.frame.size.width, height: CGFloat.greatestFiniteMagnitude),
+                options: NSStringDrawingOptions.usesLineFragmentOrigin,
+                attributes: [NSFontAttributeName: self.font],
+                context: nil).size
+            
+            return (size.height > self.bounds.size.height)
+        }
+        
+        return false
+    }
+    
+}

@@ -17,6 +17,7 @@ class Post: NSObject {
     var postID: String!
     var postDescription: String!
     var timestamp: Double!
+    var postImage: UIImage?
     
     var peopleWhoLike: [String] = [String]()
     

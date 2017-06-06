@@ -9,6 +9,10 @@
 import UIKit
 import Firebase
 
+protocol PostCellDelegate: NSObjectProtocol {
+    func moreButtonTouched(indexPath: IndexPath)
+}
+
 class PostCell: UICollectionViewCell {
     
     @IBOutlet weak var postImage: UIImageView!
@@ -17,9 +21,13 @@ class PostCell: UICollectionViewCell {
     @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var postDescription: UILabel!
     @IBOutlet weak var timeStamp: UILabel!
-    @IBOutlet weak var moreText: UIButton!
+    @IBOutlet weak var moreButton: UIButton!
     
+    
+    weak var delegate: PostCellDelegate?
+    public var indexPath: IndexPath!
     var postID: String!
+    
     
     @IBAction func likePressed(_ sender: Any) {
         // connect to firebase, save the like add them to the array
@@ -91,6 +99,15 @@ class PostCell: UICollectionViewCell {
             }
         })
         ref.removeAllObservers()
-    }    
+    }
+    
+    @IBAction func moreButtonTouched(_ sender: Any) {
+        print("more pressed")
+        if let delegate = self.delegate {
+            print("more if let")
+            delegate.moreButtonTouched(indexPath: indexPath)
+        }
+    }
+    
 }
 

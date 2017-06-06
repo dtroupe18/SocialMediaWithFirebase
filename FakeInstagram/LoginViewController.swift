@@ -23,9 +23,8 @@ class LoginViewController: UIViewController {
     @IBAction func loginPressed(_ sender: Any) {
         guard emailField.text != "", passwordField.text != "" else {
             // Alert error message
-            // self.displayAlert(title: "Error", message: "Please enter an email and password.")
-            if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
-                Helper.showAlertMessage(vc: vc, title: "Error", message: "Please enter an email and password")
+            if let topController = UIApplication.topViewController() {
+                Helper.showAlertMessage(vc: topController, title: "Error", message: "Please enter an email and password")
             }
             return
         }
@@ -34,8 +33,8 @@ class LoginViewController: UIViewController {
             
             if let error = error {
                 // alert user of the error
-                if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
-                    Helper.showAlertMessage(vc: vc, title: "Login Error", message: error.localizedDescription)
+                if let topController = UIApplication.topViewController() {
+                    Helper.showAlertMessage(vc: topController, title: "Login Error", message: error.localizedDescription)
                 }
                 // print(error.localizedDescription)
             }

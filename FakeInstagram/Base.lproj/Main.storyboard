@@ -525,6 +525,9 @@
                                                     <state key="normal" title="More">
                                                         <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="moreButtonTouched:" destination="1dk-ZX-Ajq" eventType="touchUpInside" id="lrG-Yu-ajB"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </view>
@@ -549,7 +552,7 @@
                                         <connections>
                                             <outlet property="likeButton" destination="smS-0a-WgD" id="vrE-73-Ojk"/>
                                             <outlet property="likeLabel" destination="AAq-ds-pBh" id="u7v-Z4-Sqh"/>
-                                            <outlet property="moreText" destination="eiN-ma-m5D" id="hM2-Oz-Gng"/>
+                                            <outlet property="moreButton" destination="eiN-ma-m5D" id="AKZ-Fb-a0m"/>
                                             <outlet property="postDescription" destination="DGI-5x-ufY" id="gpJ-c4-97i"/>
                                             <outlet property="postImage" destination="5pj-cn-THx" id="mao-0L-y92"/>
                                             <outlet property="timeStamp" destination="cE2-TH-238" id="YG5-R5-pDq"/>
@@ -581,7 +584,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1mm-Le-XPj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3631" y="146"/>
+            <point key="canvasLocation" x="3629.5999999999999" y="145.27736131934034"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

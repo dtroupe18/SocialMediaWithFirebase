@@ -60,8 +60,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         // make sure everything is filled out
         guard nameField.text != "", emailField.text != "", password.text != "", confirmPassword.text != "" else {
             // alert
-            if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
-                Helper.showAlertMessage(vc: vc, title: "Error", message: "Please enter all of the required fields")
+            if let topController = UIApplication.topViewController() {
+                Helper.showAlertMessage(vc: topController, title: "Error", message: "Please enter all of the required fields")
             }
             return
         }
@@ -119,8 +119,8 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
         else {
             // alert
-            if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
-                Helper.showAlertMessage(vc: vc, title: "Error", message: "Passwords do not match")
+            if let topController = UIApplication.topViewController() {
+                Helper.showAlertMessage(vc: topController, title: "Error", message: "Passwords do not match")
             }
         }
     }    

@@ -35,7 +35,10 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
             
             for(_, value) in users {
                 if let uid = value["uid"] as? String {
-                    if uid != Auth.auth().currentUser!.uid {
+                    /* check that the current user is still signed in
+                    if the user clicks signout before this was finished the application
+                    will crash */
+                    if Auth.auth().currentUser?.uid != nil && uid != Auth.auth().currentUser!.uid {
                         let userToShow = User()
                         
                         if let fullName = value["full name"] as? String, let imagePath = value["urlToImage"] as? String {
@@ -137,13 +140,12 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
             self.present(vc, animated: true, completion: nil)
         }
         catch let error as NSError {
-            if let vc =  UIApplication.shared.delegate?.window??.rootViewController {
-                Helper.showAlertMessage(vc: vc, title: "Sign out error", message: error.localizedDescription)
+            if let topController = UIApplication.topViewController() {
+                Helper.showAlertMessage(vc: topController, title: "Sign out error", message: error.localizedDescription)
             }
         }
     }
 }
-
 
 extension UIImageView {
     

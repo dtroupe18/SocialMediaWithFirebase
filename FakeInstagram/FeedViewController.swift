@@ -14,22 +14,14 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // datasource, delegate, and prefetchDataSource added in storyboard
 
     @IBOutlet weak var collectionView: UICollectionView!
-    var expandedCellIdentifier = "ExpandableCell"
-    
-    // change this set size to a calculated size
-    var expandedHeight: CGFloat = 500
     
     
     var posts = [Post]()
-    var isExpanded = [Bool]()
     var following = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchPosts()
-//        isExpanded = Array(repeating: false, count: posts.count)
-//        print("\n\nisExpanded: \(isExpanded.count)")
-//        print("Posts: \(posts.count)")
     }
     
     
@@ -80,7 +72,6 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                                 }
                                                 
                                                 self.posts.append(posst)
-                                                self.isExpanded.append(false)
                                             }
                                         }
                                     }
@@ -140,6 +131,7 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // place more button in post cell if the text is too long
         if  cell.postDescription.isTruncated() {
             cell.moreButton.isHidden = false
+            
         }
 
         
@@ -153,29 +145,11 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize  {
-        
-        print(isExpanded)
-        print(indexPath.row)
-        if isExpanded[indexPath.row] == true {
-            return CGSize(width: collectionView.frame.size.width, height: expandedHeight)
-        }
-            
-        else {
-            // I JUST PICKED A RANDOM SIZE "250"
-            return CGSize(width: collectionView.frame.size.width, height: 350)
-        }
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize  {
+//        
+//    }
     
-    func moreButtonPressed(indexPath: IndexPath) {
-        isExpanded[indexPath.row] = !isExpanded[indexPath.row]
-        UIView.animate(withDuration: 0.8, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.9, options: UIViewAnimationOptions.curveEaseInOut, animations: {
-            self.collectionView.reloadItems(at: [indexPath])},
-                       completion: { sucess in
-                        print("resize works")
-        })
-    }
-
+    
 
     func convertTimestamp(serverTimestamp: Double) -> String {
         let x = serverTimestamp / 1000

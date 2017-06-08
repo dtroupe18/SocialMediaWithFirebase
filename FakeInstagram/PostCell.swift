@@ -23,10 +23,15 @@ class PostCell: UICollectionViewCell {
     @IBOutlet weak var timeStamp: UILabel!
     @IBOutlet weak var moreButton: UIButton!
     
+    // keep track of whether the cell can be expanded?
+    var isExpandable = false
+    
     
     weak var delegate: PostCellDelegate?
     public var indexPath: IndexPath!
     var postID: String!
+    
+    
     
     
     @IBAction func likePressed(_ sender: Any) {
@@ -103,10 +108,6 @@ class PostCell: UICollectionViewCell {
     
     @IBAction func moreButtonTouched(_ sender: Any) {
         print("more pressed")
-        if let delegate = self.delegate {
-            print("more if let")
-            delegate.moreButtonTouched(indexPath: indexPath)
-        }
     }
     
 }

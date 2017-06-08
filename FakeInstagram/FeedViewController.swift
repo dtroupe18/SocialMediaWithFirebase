@@ -18,10 +18,13 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     var posts = [Post]()
     var following = [String]()
+    var expandedPosts = [Bool]()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchPosts()
+        expandedPosts = Array(repeating: false, count: posts.count)
     }
     
     
@@ -128,10 +131,21 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Add Timestamp
         cell.timeStamp.text = convertTimestamp(serverTimestamp: self.posts[indexPath.row].timestamp!)
         
+        // ADDITIONAL BUTTON STUFF...............
+        // cell.moreButton.addTarget(self, action: "testFunction", for: UIControlEvents.touchUpInside)
+        
+        // BUTTON CLICKS
+        cell.moreTapAction = { (PostCell) in
+            self.expandPostCell(indexPath: indexPath)
+            print("More Button at: \(indexPath) touched")
+            self.posts[indexPath.row].isExpanded = true
+            cell.isExpanded = true
+            print(cell.isExpanded)
+        }
+        
         // place more button in post cell if the text is too long
         if  cell.postDescription.isTruncated() {
             cell.moreButton.isHidden = false
-            
         }
 
         
@@ -145,9 +159,15 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return cell
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize  {
-//        
-//    }
+    
+    func expandPostCell(indexPath: IndexPath) -> Void {
+        print("Expand Cell Called....\(indexPath)")
+        print(indexPath.row)
+        print(expandedPosts.count)
+        posts[indexPath.row].isExpanded = true
+        print(posts[indexPath.row])
+        self.collectionView.reloadItems(at: [indexPath])
+    }
     
     
 

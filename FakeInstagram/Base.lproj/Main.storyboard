@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -174,6 +174,14 @@
             </objects>
             <point key="canvasLocation" x="1020" y="139.880059970015"/>
         </scene>
+        <!--Feed-->
+        <scene sceneID="4QE-on-mO3">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Feed" id="dPH-Jb-mYK" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qsB-eY-VUV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1742" y="-345"/>
+        </scene>
         <!--Users View Controller-->
         <scene sceneID="y8K-0O-B8u">
             <objects>
@@ -258,22 +266,29 @@
                                 <color key="barTintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <items>
                                     <navigationItem title="Users" id="eHa-1J-kTf">
-                                        <barButtonItem key="leftBarButtonItem" id="qHb-S2-fyL">
-                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0sO-KI-3hh">
-                                                <rect key="frame" x="16" y="3" width="83" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" title="Log Out">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
+                                        <leftBarButtonItems>
+                                            <barButtonItem id="qHb-S2-fyL">
+                                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="0sO-KI-3hh">
+                                                    <rect key="frame" x="16" y="3" width="83" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Log Out">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="logOutPressed:" destination="biB-Qv-xS3" eventType="touchUpInside" id="VNm-Mt-WTQ"/>
+                                                    </connections>
+                                                </button>
                                                 <connections>
-                                                    <action selector="logOutPressed:" destination="biB-Qv-xS3" eventType="touchUpInside" id="VNm-Mt-WTQ"/>
+                                                    <action selector="logOutPressed:" destination="biB-Qv-xS3" id="Igf-Vg-Cra"/>
+                                                    <segue destination="BYZ-38-t0r" kind="show" id="f3E-p2-pw5"/>
                                                 </connections>
-                                            </button>
-                                            <connections>
-                                                <action selector="logOutPressed:" destination="biB-Qv-xS3" id="Igf-Vg-Cra"/>
-                                                <segue destination="BYZ-38-t0r" kind="show" id="f3E-p2-pw5"/>
-                                            </connections>
-                                        </barButtonItem>
+                                            </barButtonItem>
+                                            <barButtonItem title="New" id="boP-s6-1ms">
+                                                <connections>
+                                                    <segue destination="dPH-Jb-mYK" kind="show" id="pxC-0f-uE1"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </leftBarButtonItems>
                                         <rightBarButtonItems>
                                             <barButtonItem systemItem="add" id="CG0-Xb-WKN">
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

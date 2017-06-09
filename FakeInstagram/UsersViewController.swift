@@ -129,8 +129,7 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         })
         ref.removeAllObservers()
     }
-    
-    
+
     @IBAction func logOutPressed(_ sender: Any) {
         // sign out the current user and segue back to sign in vc
         do {

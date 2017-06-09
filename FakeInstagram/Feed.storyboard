@@ -26,7 +26,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="ak9-L9-1c2"/>
+                                    <constraint firstAttribute="height" constant="40" id="QSf-Q6-RZK"/>
                                 </constraints>
                                 <items>
                                     <navigationItem title="NewsFeed" id="j9r-Mi-hdR"/>
@@ -36,11 +36,11 @@
                                 <rect key="frame" x="0.0" y="40" width="375" height="627"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BetterPostCell" rowHeight="350" id="Daq-jC-SeN" customClass="BetterPostCell" customModule="FakeInstagram" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="betterPostCell" rowHeight="350" id="Daq-jC-SeN" customClass="BetterPostCell" customModule="FakeInstagram" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="350"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Daq-jC-SeN" id="lKO-Ms-193">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="349.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="350"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PTS-rH-yYd">
@@ -62,7 +62,7 @@
                                                         <action selector="helpfulPressed:" destination="Daq-jC-SeN" eventType="touchUpInside" id="61O-Gw-Zaw"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pnr-Yb-rng">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pnr-Yb-rng">
                                                     <rect key="frame" x="5" y="188" width="78" height="30"/>
                                                     <state key="normal" title="Not Helpful"/>
                                                     <connections>
@@ -84,7 +84,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQ5-OW-6dU">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQ5-OW-6dU">
                                                     <rect key="frame" x="326" y="311" width="36" height="30"/>
                                                     <state key="normal" title="More"/>
                                                     <connections>
@@ -122,16 +122,20 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="GTj-Pd-MhY" id="1se-SI-uQp"/>
+                                    <outlet property="delegate" destination="GTj-Pd-MhY" id="qUF-s3-9vC"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="brL-1C-eqs" firstAttribute="leading" secondItem="56u-Ir-yAJ" secondAttribute="leading" id="9kB-U4-D5c"/>
                             <constraint firstAttribute="trailing" secondItem="56u-Ir-yAJ" secondAttribute="trailing" id="CGl-Rc-8cI"/>
-                            <constraint firstItem="brL-1C-eqs" firstAttribute="leading" secondItem="IlD-X9-ZX2" secondAttribute="leading" id="Fzo-M7-ROJ"/>
-                            <constraint firstItem="brL-1C-eqs" firstAttribute="top" secondItem="IlD-X9-ZX2" secondAttribute="top" id="VuL-F5-PCg"/>
-                            <constraint firstItem="56u-Ir-yAJ" firstAttribute="top" secondItem="brL-1C-eqs" secondAttribute="bottom" id="Xfz-xT-jNx"/>
+                            <constraint firstItem="brL-1C-eqs" firstAttribute="trailing" secondItem="56u-Ir-yAJ" secondAttribute="trailing" id="TGQ-Vs-ZYS"/>
                             <constraint firstItem="56u-Ir-yAJ" firstAttribute="leading" secondItem="IlD-X9-ZX2" secondAttribute="leading" id="gN2-S4-Nad"/>
-                            <constraint firstAttribute="trailing" secondItem="brL-1C-eqs" secondAttribute="trailing" id="igD-0w-2hK"/>
+                            <constraint firstItem="brL-1C-eqs" firstAttribute="top" secondItem="IlD-X9-ZX2" secondAttribute="top" id="rK3-VY-2iD"/>
+                            <constraint firstItem="brL-1C-eqs" firstAttribute="bottom" secondItem="56u-Ir-yAJ" secondAttribute="top" id="waN-BK-YRq"/>
                             <constraint firstItem="vCQ-UL-E9p" firstAttribute="top" secondItem="56u-Ir-yAJ" secondAttribute="bottom" id="zEe-Ds-nDE"/>
                         </constraints>
                     </view>

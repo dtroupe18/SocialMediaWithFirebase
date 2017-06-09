@@ -145,22 +145,3 @@ class UsersViewController: UIViewController, UITableViewDelegate, UITableViewDat
         }
     }
 }
-
-extension UIImageView {
-    
-    func downloadImage(from imgURL: String!) {
-        let url = URLRequest(url: URL(string: imgURL)!)
-        
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if error != nil {
-                print(error!)
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.image = UIImage(data: data!)
-            }
-        }
-        task.resume()
-    }
-}

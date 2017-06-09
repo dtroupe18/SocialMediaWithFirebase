@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+
 
 class BetterPostCell: UITableViewCell {
     
@@ -17,6 +19,10 @@ class BetterPostCell: UITableViewCell {
     @IBOutlet weak var timestamp: UILabel!
     @IBOutlet weak var helpfulButton: UIButton!
     @IBOutlet weak var notHelpfulButton: UIButton!
+    
+    
+    public var indexPath: IndexPath!
+    var postID: String!
     
     
     
@@ -30,6 +36,7 @@ class BetterPostCell: UITableViewCell {
     
     
     @IBAction func moreButtonPressed(_ sender: Any) {
+        
     }
       
 

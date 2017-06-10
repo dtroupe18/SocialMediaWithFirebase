@@ -11,6 +11,7 @@ import UIKit
 // like a dictionary in swift 3.0
 // you have to use NSString because it conforms to any object
 
+
 let imageCache = NSCache<NSString, UIImage>()
 
 extension UIImageView {
@@ -18,26 +19,42 @@ extension UIImageView {
     func downloadImage(from imgURL: String!) {
         let url = URLRequest(url: URL(string: imgURL)!)
         
+        // set initial image to nil so it doesn't use the image from a reused cell
         image = nil
         
+        // check if the image is already in the cache
         if let imageToCache = imageCache.object(forKey: imgURL! as NSString) {
             self.image = imageToCache
             return
         }
         
+        // download the image asynchronously
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error != nil {
-                print(error!)
+                // user an alert to display the error
+                if let topController = UIApplication.topViewController() {
+                    Helper.showAlertMessage(vc: topController, title: "Error Downloading Image", message: error as! String)
+                }
                 return
             }
             
             DispatchQueue.main.async {
-                
+                // create UIImage
                 let imageToCache = UIImage(data: data!)
+                // add image to cache
                 imageCache.setObject(imageToCache!, forKey: imgURL! as NSString)
                 self.image = imageToCache
             }
         }
         task.resume()
+    }
+}
+
+extension String {
+    func height(withConstrainedWidth width: CGFloat, font: UIFont) -> CGFloat {
+        let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSFontAttributeName: font], context: nil)
+        
+        return boundingBox.height
     }
 }

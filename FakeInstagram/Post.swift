@@ -18,7 +18,7 @@ class Post: NSObject {
     var postDescription: String!
     var timestamp: Double!
     var postImage: UIImage?
-    var isExpanded: Bool!
+    var isExpanded = false
     
     var peopleWhoLike: [String] = [String]()
     

@@ -23,7 +23,8 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchPosts()
-
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 350; // Default Size
     }
     
     func fetchPosts() {
@@ -84,8 +85,6 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         })
         ref.removeAllObservers()
-        print("Fetch Posts Finished")
-        print(posts.count)
     }
 
 
@@ -105,58 +104,58 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "betterPostCell", for: indexPath) as! BetterPostCell
         
-        cell.tag = indexPath.row
-        
-        if cell.tag == indexPath.row {
-            cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage)
-        }
-        
-
          // Configure the cell...
         cell.indexPath = indexPath
-        print(cell.indexPath)
+        cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage)
         
+        // sort so the most recent post is first
         self.posts.sort(by: {$0.timestamp > $1.timestamp})
-        // creating a cell....
-        // cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage)
-        // cell.authorLabel.text = self.posts[indexPath.row].author
         cell.helpfulLabel.text = "\(self.posts[indexPath.row].likes!) Helpful"
         cell.postID = self.posts[indexPath.row].postID
-        print(cell.postID)
         
         // MAKE USERNAME BOLD IN DESCRIPTION
         let fullPostText = self.posts[indexPath.row].postDescription!
         let author = self.posts[indexPath.row].author!
         
         let authorWordRange = (fullPostText as NSString).range(of: author)
-        
         let attributedString = NSMutableAttributedString(string: fullPostText, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 16)])
-        
         attributedString.setAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16), NSForegroundColorAttributeName : UIColor.black], range: authorWordRange)
-        
         cell.postDescription.attributedText = attributedString
+        cell.postDescription.sizeToFit()
         
         // Add Timestamp
         cell.timestamp.text = convertTimestamp(serverTimestamp: self.posts[indexPath.row].timestamp!)
-        
-        // ADDITIONAL BUTTON STUFF...............
-        // cell.moreButton.addTarget(self, action: "testFunction", for: UIControlEvents.touchUpInside)
-        
-        // BUTTON CLICKS
-//        cell.moreTapAction = { (PostCell) in
-//            self.expandPostCell(indexPath: indexPath)
-//            print("More Button at: \(indexPath) touched")
-//            self.posts[indexPath.row].isExpanded = true
-//            cell.isExpanded = true
-//            print(cell.isExpanded)
-//        }
         
         // place more button in post cell if the text is too long
         if  cell.postDescription.isTruncated() {
             cell.moreButton.isHidden = false
         }
         
+        // BUTTON CLICKS
+        cell.moreTapAction = { (BetterPostCell) in
+            self.posts[indexPath.row].isExpanded = true
+    
+            // reload that row with animation
+            self.tableView.beginUpdates()
+            // self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+            self.tableView.endUpdates()   
+        }
         
+//        cell.lessTapAction = { (BetterPostCell) in
+//            self.posts[indexPath.row].isExpanded = false
+//            print("Cell should have shrunk")
+//            self.tableView.beginUpdates()
+//            self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+//            self.tableView.endUpdates()
+//        }
+        
+        if self.posts[indexPath.row].isExpanded {
+//            cell.moreButton.isHidden = true
+//            cell.moreButton.isEnabled = false
+        }
+
+        
+        // change helpful button if the post has already been marked helpful
         for person in self.posts[indexPath.row].peopleWhoLike {
             if person == Auth.auth().currentUser!.uid {
                 cell.helpfulButton.isHidden = true
@@ -165,6 +164,17 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if posts[indexPath.row].isExpanded {
+            let sysFont: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
+            let labelHeight = posts[indexPath.row].postDescription.height(withConstrainedWidth: 360, font: sysFont)
+            return 350 + labelHeight
+        }
+        else {
+            return 350.0
+        }
     }
     
     func convertTimestamp(serverTimestamp: Double) -> String {
@@ -177,6 +187,12 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         return formatter.string(from: date as Date)
     }
 
+    @IBAction func didPressBackButton(_ sender: Any) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "userVC")
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    
  
 
     /*

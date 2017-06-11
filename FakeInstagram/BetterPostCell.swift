@@ -10,8 +10,7 @@ import UIKit
 import Firebase
 
 protocol BetterPostCellDelegate: NSObjectProtocol {
-    func moreButtonPressed(indexPath: IndexPath)
-    func lessButtonPressed(indexPath: IndexPath)
+    func moreButtonPressed(cell: BetterPostCell)
 }
 
 class BetterPostCell: UITableViewCell {
@@ -27,12 +26,14 @@ class BetterPostCell: UITableViewCell {
     
     public var indexPath: IndexPath!
     public var isHelpful = false
-    var isExpanded = false
+    
     var postID: String!
     
     // closure
     var moreTapAction: ((UITableViewCell) -> Void)?
-    var lessTapAction: ((UITableViewCell) -> Void)?
+    var isExpanded = false
+    var delegate: BetterPostCellDelegate?
+    
 
     @IBAction func helpfulPressed(_ sender: Any) {
         // connect to firebase, save the like add them to the array
@@ -109,7 +110,6 @@ class BetterPostCell: UITableViewCell {
     @IBAction func moreButtonPressed(_ sender: Any) {
         if sender is UIButton {
             isExpanded = !isExpanded
-            
             postDescription.numberOfLines = isExpanded ? 0 : 2
             moreButton.setTitle(isExpanded ? "Read less..." : "Read more...", for: .normal)
             moreTapAction?(self)

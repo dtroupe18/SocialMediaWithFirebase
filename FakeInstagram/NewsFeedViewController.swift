@@ -133,27 +133,13 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // BUTTON CLICKS
         cell.moreTapAction = { (BetterPostCell) in
-            self.posts[indexPath.row].isExpanded = true
+            self.posts[indexPath.row].isExpanded = !self.posts[indexPath.row].isExpanded
     
-            // reload that row with animation
+            // refresh
             self.tableView.beginUpdates()
-            // self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
             self.tableView.endUpdates()   
         }
         
-//        cell.lessTapAction = { (BetterPostCell) in
-//            self.posts[indexPath.row].isExpanded = false
-//            print("Cell should have shrunk")
-//            self.tableView.beginUpdates()
-//            self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-//            self.tableView.endUpdates()
-//        }
-        
-        if self.posts[indexPath.row].isExpanded {
-//            cell.moreButton.isHidden = true
-//            cell.moreButton.isEnabled = false
-        }
-
         
         // change helpful button if the post has already been marked helpful
         for person in self.posts[indexPath.row].peopleWhoLike {
@@ -170,10 +156,10 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         if posts[indexPath.row].isExpanded {
             let sysFont: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
             let labelHeight = posts[indexPath.row].postDescription.height(withConstrainedWidth: 360, font: sysFont)
-            return 350 + labelHeight
+            return 330 + labelHeight
         }
         else {
-            return 350.0
+            return 310.0
         }
     }
     

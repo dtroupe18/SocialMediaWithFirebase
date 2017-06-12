@@ -9,29 +9,43 @@
 import UIKit
 import Firebase
 
-class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class UploadViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var previewImage: UIImageView!
-    @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var selectImage: UIButton!
-    @IBOutlet weak var postText: UITextView!
+    var photo: UIImage?
     
+    // TableView Stuff
+    @IBOutlet weak var groupButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var categoryButton: UIButton!
+    @IBOutlet weak var categoryTableView: UITableView!
+    
+    @IBOutlet weak var nextButton: UIButton!
     
     var picker = UIImagePickerController()
     
+    let groups: NSArray = ["Table 1", "Table 2", "Table 3", "Table 4", "Table 5", "Table 6", "Table 7", "Table 8", "Table 9", "Table 10", "Table 11", "Table 12", "Table 13", "Table 14", "Table 15", "Table 16", "Table 17", "Table 18", "Table 19", "Table 20",  "Table 21", "Table 22", "Table 23", "Table 24", "Table 25", "Table 26", "Table 27", "Table 28", "Table 29", "Table 30", "Table 31", "Table 32", "Table 33", "Table 34", "Table 35", "Table 36", "Table 37", "Table 38", "Table 39", "Table 40"]
+    
+    let categories: NSArray = ["Model Features", "Pathologies", "Anomalies"]
+    
+    var group: String?
+    var category: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // style text view
-        styleTextView()
-       
         picker.delegate = self
+        
+        if self.photo != nil {
+            self.previewImage.image = photo
+            self.selectImage.isHidden = true
+        }
     }
 
     @IBAction func selectImagePressed(_ sender: Any) {
         picker.allowsEditing = true
-        picker.sourceType = .photoLibrary
+        picker.sourceType = .camera
         self.present(picker, animated: true, completion: nil)
     }
     
@@ -40,67 +54,92 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             self.previewImage.image = image
             selectImage.isHidden = true
-            postButton.isHidden = false
+            // postButton.isHidden = false
+            nextButton.isHidden = false
         }
         
         self.dismiss(animated: true, completion: nil)
     }
     
+    // toggle whether or not the tableview is visible
+    @IBAction func didPressGroup(_ sender: Any) {
+        if tableView.isHidden {
+            tableView.isHidden = false
+        }
+    }
     
-    @IBAction func postPressed(_ sender: Any) {
-        if postText.text! == "" {
+    @IBAction func didPressCategory(_ sender: Any) {
+        if categoryTableView.isHidden {
+            categoryTableView.isHidden = false
+        }
+    }
+    
+    @IBAction func didPressNext(_ sender: Any) {
+        if group == nil {
             if let topController = UIApplication.topViewController() {
-                Helper.showAlertMessage(vc: topController, title: "Error", message: ("All posts must contain a description"))
+                Helper.showAlertMessage(vc: topController, title: "Error", message: "You must select a group for your post")
             }
             return
         }
-        AppDelegate.instance().showActivityIndicator()
         
-        let uid = Auth.auth().currentUser!.uid
-        let ref = Database.database().reference()
-        let storage = Storage.storage().reference(forURL: "gs://fakeinstagram-83e97.appspot.com")
-        
-        let key = ref.child("posts").childByAutoId().key
-        let imageRef = storage.child("posts").child(uid).child("\(key).jpg")
-        
-        let data = UIImageJPEGRepresentation(self.previewImage.image!, 0.6)
-        
-        let uploadTask = imageRef.putData(data!, metadata: nil) { (metadata, error) in
-            if error != nil {
-                AppDelegate.instance().dismissActivityIndicator()
-                if let topController = UIApplication.topViewController() {
-                    Helper.showAlertMessage(vc: topController, title: "Upload Error", message: (error?.localizedDescription)!)
-                }
-                return
+        else if category == nil {
+            if let topController = UIApplication.topViewController() {
+                Helper.showAlertMessage(vc: topController, title: "Error", message: "You must select a category for your post")
             }
-            
-            imageRef.downloadURL(completion: {(url, error) in
-                if let url = url {
-                    let feed = ["userID": uid,
-                                "pathToImage": url.absoluteString,
-                                "likes": 0,
-                                "author": Auth.auth().currentUser!.displayName!,
-                                "postDescription": self.postText.text!,
-                                "timestamp": [".sv": "timestamp"],
-                                "postID": key] as [String: Any]
-                    
-                    let postFeed = ["\(key)" : feed]
-                    
-                    ref.child("posts").updateChildValues(postFeed)
-                    AppDelegate.instance().dismissActivityIndicator()
-                    self.dismiss(animated: true, completion: nil)
-                }
-            })
+            return
         }
-        uploadTask.resume()
+        
+        // change to second upload post VC
+        else {
+            performSegue(withIdentifier: "goToUploadTwo", sender: nil)
+
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToUploadTwo" {
+            let controller = segue.destination as! UploadTwoViewController
+            controller.photo = previewImage.image
+            controller.category = category
+            controller.group = group
+        }
     }
     
     
-    func styleTextView() {
-        let borderColor = UIColor.init(red: 212/255, green: 212/255, blue: 212/255, alpha: 0.5)
-        
-        self.postText.layer.borderColor = borderColor.cgColor
-        self.postText.layer.borderWidth = 0.8
-        self.postText.layer.cornerRadius = 5
+    // Group tableview setup
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView == self.tableView {
+            return groups.count
+        }
+        else {
+            return categories.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if tableView == self.tableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell")!
+            cell.textLabel?.text = groups[indexPath.row] as? String
+            // group = groups[indexPath.row] as? String
+            return cell
+        }
+        else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell")!
+            cell.textLabel?.text = categories[indexPath.row] as? String
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == self.tableView {
+            group = groups[indexPath.row] as? String
+        }
+        else {
+            category = categories[indexPath.row] as? String
+        }
     }
 }

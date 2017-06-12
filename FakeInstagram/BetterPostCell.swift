@@ -22,6 +22,9 @@ class BetterPostCell: UITableViewCell {
     @IBOutlet weak var timestamp: UILabel!
     @IBOutlet weak var helpfulButton: UIButton!
     @IBOutlet weak var notHelpfulButton: UIButton!
+    @IBOutlet weak var userWhoPostedImageView: UIImageView!
+    @IBOutlet weak var userWhoPostedLabel: UILabel!
+    @IBOutlet weak var editButton: UIButton!
     
     
     public var indexPath: IndexPath!
@@ -118,10 +121,11 @@ class BetterPostCell: UITableViewCell {
         
     }
       
-//    @IBAction func lessButtonPressed(_ sender: Any) {
-//        lessTapAction?(self)
-//    }
-    
+    @IBAction func didPressEdit(_ sender: Any) {
+        // should take you to the create post screen
+        // where you can alter the post?
+    }
+
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -45,6 +45,7 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
         present(picker, animated: true, completion: nil)
     }
     
+    
     // after image is picked
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         // can do original or edited image
@@ -52,6 +53,11 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             self.imageView.image = image
             // user can move on because they chose an image
             nextButton.isHidden = false
+        }
+        else {
+            if let vc = UIApplication.topViewController() {
+                Helper.showAlertMessage(vc: vc, title: "Image Error", message: "Something went wrong")
+            }
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -71,7 +77,11 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
             Auth.auth().createUser(withEmail: emailField.text!, password: password.text!, completion: { (user, error) in
             
                 if let error = error {
-                    print(error.localizedDescription)
+                    if let topController = UIApplication.topViewController() {
+                        Helper.showAlertMessage(vc: topController, title: "Error", message: error.localizedDescription)
+                    }
+                    AppDelegate.instance().dismissActivityIndicator()
+                    return
                 }
                 
                 if let user = user {
@@ -88,12 +98,20 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                     
                     let uploadTask = imageRef.putData(data!, metadata: nil, completion: { (metadata, err) in
                         if err != nil {
-                            print(err!.localizedDescription)
+                            if let topController = UIApplication.topViewController() {
+                                Helper.showAlertMessage(vc: topController, title: "Error", message: err!.localizedDescription)
+                            }
+                            AppDelegate.instance().dismissActivityIndicator()
+                            return
                         }
                         
                         imageRef.downloadURL(completion: { (url, er) in
                             if er != nil {
-                                print(er!.localizedDescription)
+                                if let topController = UIApplication.topViewController() {
+                                    Helper.showAlertMessage(vc: topController, title: "Error", message: er!.localizedDescription)
+                                }
+                                AppDelegate.instance().dismissActivityIndicator()
+                                return
                             }
                             
                             if let url = url {

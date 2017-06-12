@@ -2,4 +2,118 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FakeInstagram/NewsFeedViewController.swift"
+            timestampString = "519004225.810248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FakeInstagram/NewsFeedViewController.swift"
+            timestampString = "519004225.810248"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "fetchPosts()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeInstagram.NewsFeedViewController.(fetchPosts () -&gt; ()).(closure #1).(closure #1).(closure #1)"
+                  moduleName = "FakeInstagram"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Dave/Documents/iOS%20Applications/FakeInstagram/FakeInstagram/NewsFeedViewController.swift"
+                  timestampString = "519004225.939543"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "176">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeInstagram.NewsFeedViewController.(fetchPosts () -&gt; ()).(closure #1).(closure #1).(closure #1)"
+                  moduleName = "FakeInstagram"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Dave/Documents/iOS%20Applications/FakeInstagram/FakeInstagram/NewsFeedViewController.swift"
+                  timestampString = "519004225.941118"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "75"
+                  endingLineNumber = "75"
+                  offsetFromSymbolStart = "604">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FakeInstagram/NewsFeedViewController.swift"
+            timestampString = "519004214.897567"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "fetchPosts()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeInstagram.NewsFeedViewController.(fetchPosts () -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "FakeInstagram"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Dave/Documents/iOS%20Applications/FakeInstagram/FakeInstagram/NewsFeedViewController.swift"
+                  timestampString = "519004225.948761"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "73"
+                  endingLineNumber = "73"
+                  offsetFromSymbolStart = "16900">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "FakeInstagram.NewsFeedViewController.(fetchPosts () -&gt; ()).(closure #1).(closure #1).(closure #1)"
+                  moduleName = "FakeInstagram"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Dave/Documents/iOS%20Applications/FakeInstagram/FakeInstagram/NewsFeedViewController.swift"
+                  timestampString = "519004225.950686"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "74"
+                  endingLineNumber = "74"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

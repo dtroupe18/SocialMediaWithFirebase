@@ -19,7 +19,6 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
     var following = [String]()
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchPosts()
@@ -49,35 +48,50 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.following.append(Auth.auth().currentUser!.uid)
                         
                         ref.child("posts").queryOrderedByKey().observeSingleEvent(of: .value, with: { snap in
-                            let postsSnap = snap.value as? [String: AnyObject]
-                            
-                            for(_, post) in postsSnap! {
-                                if let userID = post["userID"] as? String {
-                                    for each in self.following {
-                                        if each == userID {
-                                            let posst = Post()
-                                            
-                                            if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let postDescription = post["postDescription"] as? String, let timestamp = post["timestamp"] as? Double {
+                            if let postsSnap = snap.value as? [String: AnyObject] {
+                                for(_, post) in postsSnap {
+                                    if let userID = post["userID"] as? String {
+                                        for each in self.following {
+                                            if each == userID {
+                                                let posst = Post()
                                                 
-                                                posst.author = author
-                                                posst.likes = likes
-                                                posst.pathToImage = pathToImage
-                                                posst.postID = postID
-                                                posst.userID = userID
-                                                posst.postDescription = author + ": " + postDescription
-                                                posst.timestamp = timestamp
-                                                
-                                                if let people = post["peopleWhoLike"] as? [String: AnyObject] {
-                                                    for(_, person) in people {
-                                                        posst.peopleWhoLike.append(person as! String)
+                                                if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let postDescription = post["postDescription"] as? String, let timestamp = post["timestamp"] as? Double, let category = post["category"] as? String, let group = post["group"] as? String {
+                                                    
+                                                    posst.author = author
+                                                    posst.likes = likes
+                                                    posst.pathToImage = pathToImage
+                                                    posst.postID = postID
+                                                    posst.userID = userID
+                                                    posst.postDescription = author + ": " + postDescription
+                                                    posst.timestamp = timestamp
+                                                    posst.group = group
+                                                    posst.category = category
+                                                    
+                                                    print("WTF")
+                                                    
+                                                    // THIS SNAPSHOT ISN'T DOING ANYTHING????
+                                                    // get user imagePath
+                                                    ref.child("users").child(userID).observe(.value, with: { userSnap in
+                                                        print(userSnap)
+                                                        if let postersData = userSnap.value as? [String: AnyObject] {
+                                                            let postersImagePath = postersData["urlToImage"] as? String
+                                                            posst.pathToUserImage = postersImagePath
+                                                        }
+                                                    })
+                                                    
+                                                    if let people = post["peopleWhoLike"] as? [String: AnyObject] {
+                                                        for(_, person) in people {
+                                                            posst.peopleWhoLike.append(person as! String)
+                                                        }
                                                     }
+                                                    self.posts.append(posst)
                                                 }
-                                                self.posts.append(posst)
                                             }
                                         }
+                                        self.tableView.reloadData()
                                     }
-                                    self.tableView.reloadData()
                                 }
+
                             }
                         })
                     }
@@ -107,6 +121,12 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
          // Configure the cell...
         cell.indexPath = indexPath
         cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage)
+        
+        // download the user who posted image
+        print(self.posts[indexPath.row].pathToUserImage)
+        cell.userWhoPostedImageView.downloadImage(from: self.posts[indexPath.row].pathToUserImage)
+        // cell.group.text = self.posts[indexPath.row].group
+        cell.userWhoPostedLabel.text = ("\(self.posts[indexPath.row].author!): posted in \(self.posts[indexPath.row].group!): \(self.posts[indexPath.row].category!)")
         
         // sort so the most recent post is first
         self.posts.sort(by: {$0.timestamp > $1.timestamp})
@@ -156,10 +176,10 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         if posts[indexPath.row].isExpanded {
             let sysFont: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
             let labelHeight = posts[indexPath.row].postDescription.height(withConstrainedWidth: 360, font: sysFont)
-            return 330 + labelHeight
+            return 375 + labelHeight
         }
         else {
-            return 310.0
+            return 385.0
         }
     }
     

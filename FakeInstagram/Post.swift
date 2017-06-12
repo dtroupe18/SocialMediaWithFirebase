@@ -20,6 +20,11 @@ class Post: NSObject {
     var postImage: UIImage?
     var isExpanded = false
     
+    // new additions
+    var group: String!
+    var category: String!
+    var pathToUserImage: String!
+    
     var peopleWhoLike: [String] = [String]()
     
     // comments will be stored in a string array

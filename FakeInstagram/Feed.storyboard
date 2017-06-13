@@ -46,7 +46,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="537"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Daq-jC-SeN" id="lKO-Ms-193">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="537"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="536.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PTS-rH-yYd">
@@ -83,8 +83,8 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AQ5-OW-6dU">
-                                                    <rect key="frame" x="331" y="496" width="36" height="30"/>
-                                                    <state key="normal" title="More"/>
+                                                    <rect key="frame" x="280" y="496" width="87" height="30"/>
+                                                    <state key="normal" title="Read more..."/>
                                                     <connections>
                                                         <action selector="moreButtonPressed:" destination="Daq-jC-SeN" eventType="touchUpInside" id="Ut6-Ei-m2b"/>
                                                     </connections>
@@ -96,7 +96,7 @@
                                                         <constraint firstAttribute="width" constant="50" id="Iyp-Gb-n6U"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPT-LR-brB">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pPT-LR-brB">
                                                     <rect key="frame" x="333" y="36" width="30" height="30"/>
                                                     <state key="normal" title="Edit"/>
                                                     <connections>

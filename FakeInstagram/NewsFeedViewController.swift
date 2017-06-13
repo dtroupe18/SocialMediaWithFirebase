@@ -114,6 +114,14 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         // download the user image for each cell
         let testRef = Database.database().reference()
         let userID = posts[indexPath.row].userID
+        
+        // check if the post was created by the current user
+        // post.userID == current user
+        if userID! == Auth.auth().currentUser!.uid {
+            cell.editButton.isHidden = false
+        }
+        
+        
         testRef.child("userImagePaths").child(userID!).queryOrderedByKey().observeSingleEvent(of: .value, with: { dataSnapshot in
             if let pathSnap = dataSnapshot.value as? [String: AnyObject] {
                 if let imagePath = pathSnap["urlToImage"] as? String {
@@ -123,7 +131,8 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         })
         testRef.removeAllObservers()
 
-        
+        // disables the ugly cell highlighting 
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
         cell.userWhoPostedLabel.attributedText = posts[indexPath.row].userWhoPostedLabel
 
         cell.helpfulLabel.text = "\(self.posts[indexPath.row].likes!) Helpful"
@@ -136,9 +145,15 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.timestamp.text = convertTimestamp(serverTimestamp: self.posts[indexPath.row].timestamp!)
         
         // place more button in post cell if the text is too long
-        if  cell.postDescription.isTruncated() {
+//        if  cell.postDescription.isTruncated() {
+//            cell.moreButton.isHidden = false
+//        }
+        
+        print(cell.postDescription.numberOfVisibleLines)
+        if cell.postDescription.numberOfVisibleLines >= 2 {
             cell.moreButton.isHidden = false
         }
+        
         
         // BUTTON CLICKS
         cell.moreTapAction = { (BetterPostCell) in

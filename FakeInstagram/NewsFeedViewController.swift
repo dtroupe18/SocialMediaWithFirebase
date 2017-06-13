@@ -17,7 +17,7 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var posts = [Post]()
     var following = [String]()
-    
+    let ref = Database.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,6 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         // each user has some set of people they are following
         // we need to get the posts for all of those users
         // for each check if the user is someone we are following
-        let ref = Database.database().reference()
         ref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: { snapshot in
             
             let users = snapshot.value as! [String: AnyObject]
@@ -47,7 +46,7 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
                         // add the user themself as well
                         self.following.append(Auth.auth().currentUser!.uid)
                         
-                        ref.child("posts").queryOrderedByKey().observeSingleEvent(of: .value, with: { snap in
+                        self.ref.child("posts").queryOrderedByKey().observeSingleEvent(of: .value, with: { snap in
                             if let postsSnap = snap.value as? [String: AnyObject] {
                                 for(_, post) in postsSnap {
                                     if let userID = post["userID"] as? String {
@@ -62,22 +61,12 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
                                                     posst.pathToImage = pathToImage
                                                     posst.postID = postID
                                                     posst.userID = userID
+                                                    posst.fancyPostDescription = self.createAttributedString(author: author, postText: postDescription)
                                                     posst.postDescription = author + ": " + postDescription
                                                     posst.timestamp = timestamp
                                                     posst.group = group
                                                     posst.category = category
-                                                    
-                                                    print("WTF")
-                                                    
-                                                    // THIS SNAPSHOT ISN'T DOING ANYTHING????
-                                                    // get user imagePath
-                                                    ref.child("users").child(userID).observe(.value, with: { userSnap in
-                                                        print(userSnap)
-                                                        if let postersData = userSnap.value as? [String: AnyObject] {
-                                                            let postersImagePath = postersData["urlToImage"] as? String
-                                                            posst.pathToUserImage = postersImagePath
-                                                        }
-                                                    })
+                                                    posst.userWhoPostedLabel = self.createAttributedPostLabel(username: author, table: group, category: category)
                                                     
                                                     if let people = post["peopleWhoLike"] as? [String: AnyObject] {
                                                         for(_, person) in people {
@@ -85,13 +74,12 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
                                                         }
                                                     }
                                                     self.posts.append(posst)
-                                                }
+                                                } // end if let
                                             }
                                         }
                                         self.tableView.reloadData()
                                     }
                                 }
-
                             }
                         })
                     }
@@ -100,7 +88,7 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         })
         ref.removeAllObservers()
     }
-
+    
 
     // MARK: - Table view data source
 
@@ -118,29 +106,30 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "betterPostCell", for: indexPath) as! BetterPostCell
         
-         // Configure the cell...
+        // sort so the most recent post is first
+        self.posts.sort(by: {$0.timestamp > $1.timestamp})
         cell.indexPath = indexPath
         cell.postImage.downloadImage(from: self.posts[indexPath.row].pathToImage)
         
-        // download the user who posted image
-        print(self.posts[indexPath.row].pathToUserImage)
-        cell.userWhoPostedImageView.downloadImage(from: self.posts[indexPath.row].pathToUserImage)
-        // cell.group.text = self.posts[indexPath.row].group
-        cell.userWhoPostedLabel.text = ("\(self.posts[indexPath.row].author!): posted in \(self.posts[indexPath.row].group!): \(self.posts[indexPath.row].category!)")
+        // download the user image for each cell
+        let testRef = Database.database().reference()
+        let userID = posts[indexPath.row].userID
+        testRef.child("userImagePaths").child(userID!).queryOrderedByKey().observeSingleEvent(of: .value, with: { dataSnapshot in
+            if let pathSnap = dataSnapshot.value as? [String: AnyObject] {
+                if let imagePath = pathSnap["urlToImage"] as? String {
+                    cell.userWhoPostedImageView.downloadUserImage(from: imagePath)
+                }
+            }
+        })
+        testRef.removeAllObservers()
+
         
-        // sort so the most recent post is first
-        self.posts.sort(by: {$0.timestamp > $1.timestamp})
+        cell.userWhoPostedLabel.attributedText = posts[indexPath.row].userWhoPostedLabel
+
         cell.helpfulLabel.text = "\(self.posts[indexPath.row].likes!) Helpful"
         cell.postID = self.posts[indexPath.row].postID
         
-        // MAKE USERNAME BOLD IN DESCRIPTION
-        let fullPostText = self.posts[indexPath.row].postDescription!
-        let author = self.posts[indexPath.row].author!
-        
-        let authorWordRange = (fullPostText as NSString).range(of: author)
-        let attributedString = NSMutableAttributedString(string: fullPostText, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 16)])
-        attributedString.setAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16), NSForegroundColorAttributeName : UIColor.black], range: authorWordRange)
-        cell.postDescription.attributedText = attributedString
+        cell.postDescription.attributedText = posts[indexPath.row].fancyPostDescription
         cell.postDescription.sizeToFit()
         
         // Add Timestamp
@@ -176,10 +165,10 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         if posts[indexPath.row].isExpanded {
             let sysFont: UIFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
             let labelHeight = posts[indexPath.row].postDescription.height(withConstrainedWidth: 360, font: sysFont)
-            return 375 + labelHeight
+            return 555 + labelHeight
         }
         else {
-            return 385.0
+            return 565.0
         }
     }
     
@@ -198,8 +187,30 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         self.present(vc, animated: true, completion: nil)
     }
     
+    func createAttributedString(author: String, postText: String) -> NSMutableAttributedString {
+        let fullPostText = author + " " + postText
+        let authorWordRange = (fullPostText as NSString).range(of: author)
+        let attributedString = NSMutableAttributedString(string: fullPostText, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 16)])
+        attributedString.setAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16), NSForegroundColorAttributeName : UIColor.black], range: authorWordRange)
+        
+        return attributedString
+    }
     
- 
+    func createAttributedPostLabel(username: String, table: String, category: String) -> NSMutableAttributedString {
+        
+        let string = username + " posted in " + table + ": " + category as NSString
+        let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 16.0)])
+        
+        let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16.0)]
+        
+        // Part of string to be bold
+        attributedString.addAttributes(boldFontAttribute, range: string.range(of: username))
+        attributedString.addAttributes(boldFontAttribute, range: string.range(of: table))
+        attributedString.addAttributes(boldFontAttribute, range: string.range(of: category))
+        
+        return attributedString
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.

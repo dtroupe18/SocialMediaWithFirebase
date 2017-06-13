@@ -13,6 +13,7 @@ import UIKit
 
 
 let imageCache = NSCache<NSString, UIImage>()
+let userImageCache = NSCache<NSString, UIImage>()
 
 extension UIImageView {
     
@@ -48,6 +49,40 @@ extension UIImageView {
         }
         task.resume()
     }
+    
+    func downloadUserImage(from imgURL: String!) {
+        let url = URLRequest(url: URL(string: imgURL)!)
+        
+        // set initial image to nil so it doesn't use the image from a reused cell
+        image = nil
+        
+        // check if the image is already in the cache
+        if let imageToCache = userImageCache.object(forKey: imgURL! as NSString) {
+            self.image = imageToCache
+            return
+        }
+        
+        // download the image asynchronously
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if error != nil {
+                // user an alert to display the error
+                if let topController = UIApplication.topViewController() {
+                    Helper.showAlertMessage(vc: topController, title: "Error Downloading Image", message: error as! String)
+                }
+                return
+            }
+            
+            DispatchQueue.main.async {
+                // create UIImage
+                let imageToCache = UIImage(data: data!)
+                // add image to cache
+                userImageCache.setObject(imageToCache!, forKey: imgURL! as NSString)
+                self.image = imageToCache
+            }
+        }
+        task.resume()
+    }
+
 }
 
 extension String {

@@ -16,8 +16,10 @@ class Post: NSObject {
     var userID: String!
     var postID: String!
     var postDescription: String!
+    var fancyPostDescription: NSMutableAttributedString!
     var timestamp: Double!
     var postImage: UIImage?
+    var userWhoPostedLabel: NSMutableAttributedString!
     var isExpanded = false
     
     // new additions

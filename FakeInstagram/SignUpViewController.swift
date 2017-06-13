@@ -121,6 +121,10 @@ class SignUpViewController: UIViewController, UIImagePickerControllerDelegate, U
                                 
                                 self.ref.child("users").child(user.uid).setValue(userInfo)
                                 
+                                let userImageInfo: [String: Any] = ["urlToImage": url.absoluteString]
+                                
+                                self.ref.child("userImagePaths").child(user.uid).setValue(userImageInfo)
+                                
                                 // differeny way to segue to another viewController
                                 AppDelegate.instance().dismissActivityIndicator()
                                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "userVC")

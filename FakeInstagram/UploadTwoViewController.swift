@@ -17,8 +17,9 @@ class UploadTwoViewController: UIViewController {
     @IBOutlet weak var categoryLabel: UILabel!
     
     var photo: UIImage!
-    var group: String!
+    var group: Int!
     var category: String!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,7 @@ class UploadTwoViewController: UIViewController {
         }
         
         if self.group != nil {
-            self.groupLabel.text = group
+            self.groupLabel.text = "Table: \(group!)"
         }
         
         if self.category != nil {
@@ -86,6 +87,7 @@ class UploadTwoViewController: UIViewController {
             })
         }
         uploadTask.resume()
+        performSegue(withIdentifier: "finishedPost", sender: nil)
     }
     
 

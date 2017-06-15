@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -30,10 +31,27 @@
                                 </constraints>
                                 <items>
                                     <navigationItem title="NewsFeed" id="j9r-Mi-hdR">
-                                        <barButtonItem key="leftBarButtonItem" title="&lt;" id="jcu-hO-HcX">
-                                            <connections>
-                                                <action selector="didPressBackButton:" destination="GTj-Pd-MhY" id="TZz-Px-KXc"/>
-                                            </connections>
+                                        <leftBarButtonItems>
+                                            <barButtonItem title="&lt;" id="jcu-hO-HcX">
+                                                <connections>
+                                                    <action selector="didPressBackButton:" destination="GTj-Pd-MhY" id="TZz-Px-KXc"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem title="Categories" id="jLo-hW-EQm">
+                                                <connections>
+                                                    <action selector="categoriesPressed:" destination="GTj-Pd-MhY" id="Itq-Qk-zYS"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </leftBarButtonItems>
+                                        <barButtonItem key="rightBarButtonItem" id="79P-aC-o2y">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="orj-5Q-Wtf">
+                                                <rect key="frame" x="276" y="13" width="83" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Tables"/>
+                                                <connections>
+                                                    <action selector="tablesPressed:" destination="GTj-Pd-MhY" eventType="touchUpInside" id="NVF-qy-t2B"/>
+                                                </connections>
+                                            </button>
                                         </barButtonItem>
                                     </navigationItem>
                                 </items>
@@ -175,11 +193,20 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="56u-Ir-yAJ" id="qfo-iD-jgZ"/>
+                        <segue destination="lBF-1e-3aB" kind="show" identifier="toCategories" id="i89-vG-Xeo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NZ6-RJ-Lfv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="168.80000000000001" y="2.2488755622188905"/>
+        </scene>
+        <!--Categories-->
+        <scene sceneID="5tH-GN-aUP">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Categories" id="lBF-1e-3aB" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zdR-b1-QBR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="802" y="-267"/>
         </scene>
     </scenes>
 </document>

@@ -89,7 +89,6 @@ class FeedViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         })
         ref.removeAllObservers()
-        print("Fetch Posts Finished")
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {

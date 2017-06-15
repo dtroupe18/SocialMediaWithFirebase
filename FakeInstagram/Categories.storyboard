@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4KU-NB-bur">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Categories-->
+        <scene sceneID="jbd-IN-rmU">
+            <objects>
+                <viewController title="Categories" id="4KU-NB-bur" customClass="CategoriesViewController" customModule="FakeInstagram" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WPT-RK-Ke6"/>
+                        <viewControllerLayoutGuide type="bottom" id="yhQ-T3-NsV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="k9a-dc-3wx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nFx-Dd-YDi">
+                                <rect key="frame" x="152" y="142" width="71" height="30"/>
+                                <state key="normal" title="Anomalies">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="anomaliesPressed:" destination="4KU-NB-bur" eventType="touchUpInside" id="B3i-iZ-Oq2"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qbP-y5-qoQ">
+                                <rect key="frame" x="134" y="196" width="107" height="30"/>
+                                <state key="normal" title="Model Features">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="modelFeaturesPressed:" destination="4KU-NB-bur" eventType="touchUpInside" id="uXD-Ud-KA4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BNv-kY-Qdb">
+                                <rect key="frame" x="147" y="247" width="81" height="30"/>
+                                <state key="normal" title="Pathologies">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="pathologiesPressed:" destination="4KU-NB-bur" eventType="touchUpInside" id="RU1-9b-qUr"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="nFx-Dd-YDi" firstAttribute="top" secondItem="WPT-RK-Ke6" secondAttribute="bottom" constant="122" id="EFJ-eB-wZ0"/>
+                            <constraint firstItem="nFx-Dd-YDi" firstAttribute="centerX" secondItem="k9a-dc-3wx" secondAttribute="centerX" id="MO9-L9-DqX"/>
+                            <constraint firstItem="BNv-kY-Qdb" firstAttribute="centerX" secondItem="qbP-y5-qoQ" secondAttribute="centerX" id="U5C-6f-75q"/>
+                            <constraint firstItem="BNv-kY-Qdb" firstAttribute="top" secondItem="qbP-y5-qoQ" secondAttribute="bottom" constant="21" id="VVt-kh-FNl"/>
+                            <constraint firstItem="BNv-kY-Qdb" firstAttribute="centerX" secondItem="nFx-Dd-YDi" secondAttribute="centerX" id="gME-zT-Ttk"/>
+                            <constraint firstItem="qbP-y5-qoQ" firstAttribute="top" secondItem="nFx-Dd-YDi" secondAttribute="bottom" constant="24" id="qPw-jm-htA"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="WAz-5Q-6L9" kind="show" identifier="categoryFilter" id="Ztl-qw-adg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="m9j-lr-mWZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-185" y="43"/>
+        </scene>
+        <!--Feed-->
+        <scene sceneID="4pr-g2-LW7">
+            <objects>
+                <viewControllerPlaceholder storyboardIdentifier="Feed" storyboardName="Feed" id="WAz-5Q-6L9" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="shb-ph-6cX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="427" y="-77"/>
+        </scene>
+    </scenes>
+</document>

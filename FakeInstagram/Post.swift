@@ -23,7 +23,7 @@ class Post: NSObject {
     var isExpanded = false
     
     // new additions
-    var group: String!
+    var group: Int!
     var category: String!
     var pathToUserImage: String!
     

@@ -30,6 +30,10 @@
 		55281E651EEA13CE0061C58B /* NewsFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55281E641EEA13CE0061C58B /* NewsFeedViewController.swift */; };
 		55281E681EEB0B350061C58B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55281E671EEB0B350061C58B /* Extensions.swift */; };
 		55281E6A1EEF28610061C58B /* UploadTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55281E691EEF28610061C58B /* UploadTwoViewController.swift */; };
+		55281E6E1EF1A0EA0061C58B /* Tables.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55281E6D1EF1A0EA0061C58B /* Tables.storyboard */; };
+		55281E701EF1A1810061C58B /* TablesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55281E6F1EF1A1810061C58B /* TablesViewController.swift */; };
+		55281E721EF2CB630061C58B /* Categories.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55281E711EF2CB630061C58B /* Categories.storyboard */; };
+		55281E741EF2CC3F0061C58B /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55281E731EF2CC3F0061C58B /* CategoriesViewController.swift */; };
 		55ED602E1ED85AEA006F9CA0 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED602D1ED85AEA006F9CA0 /* PostCell.swift */; };
 		55ED60301ED85CB7006F9CA0 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED602F1ED85CB7006F9CA0 /* Post.swift */; };
 		55ED60321ED85D3F006F9CA0 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ED60311ED85D3F006F9CA0 /* FeedViewController.swift */; };
@@ -83,6 +87,10 @@
 		55281E641EEA13CE0061C58B /* NewsFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedViewController.swift; sourceTree = "<group>"; };
 		55281E671EEB0B350061C58B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		55281E691EEF28610061C58B /* UploadTwoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadTwoViewController.swift; sourceTree = "<group>"; };
+		55281E6D1EF1A0EA0061C58B /* Tables.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Tables.storyboard; sourceTree = "<group>"; };
+		55281E6F1EF1A1810061C58B /* TablesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TablesViewController.swift; sourceTree = "<group>"; };
+		55281E711EF2CB630061C58B /* Categories.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Categories.storyboard; sourceTree = "<group>"; };
+		55281E731EF2CC3F0061C58B /* CategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		55ED602D1ED85AEA006F9CA0 /* PostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		55ED602F1ED85CB7006F9CA0 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		55ED60311ED85D3F006F9CA0 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
@@ -154,6 +162,8 @@
 				55147F7B1ED73A9900724F86 /* Helper.swift */,
 				55147F3E1ED4FF4700724F86 /* Main.storyboard */,
 				55281E601EEA135B0061C58B /* Feed.storyboard */,
+				55281E6D1EF1A0EA0061C58B /* Tables.storyboard */,
+				55281E711EF2CB630061C58B /* Categories.storyboard */,
 				55147F431ED4FF4700724F86 /* LaunchScreen.storyboard */,
 				55147F411ED4FF4700724F86 /* Assets.xcassets */,
 				55147F461ED4FF4700724F86 /* Info.plist */,
@@ -190,6 +200,8 @@
 				55281E691EEF28610061C58B /* UploadTwoViewController.swift */,
 				55ED60311ED85D3F006F9CA0 /* FeedViewController.swift */,
 				55281E641EEA13CE0061C58B /* NewsFeedViewController.swift */,
+				55281E6F1EF1A1810061C58B /* TablesViewController.swift */,
+				55281E731EF2CC3F0061C58B /* CategoriesViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -364,8 +376,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				55281E611EEA135B0061C58B /* Feed.storyboard in Resources */,
+				55281E6E1EF1A0EA0061C58B /* Tables.storyboard in Resources */,
 				55147F451ED4FF4700724F86 /* LaunchScreen.storyboard in Resources */,
 				55147F691ED5000400724F86 /* GoogleService-Info.plist in Resources */,
+				55281E721EF2CB630061C58B /* Categories.storyboard in Resources */,
 				55147F421ED4FF4700724F86 /* Assets.xcassets in Resources */,
 				55147F401ED4FF4700724F86 /* Main.storyboard in Resources */,
 			);
@@ -537,6 +551,7 @@
 				55ED60301ED85CB7006F9CA0 /* Post.swift in Sources */,
 				55281E631EEA139F0061C58B /* BetterPostCell.swift in Sources */,
 				55147F731ED64E0200724F86 /* UsersViewController.swift in Sources */,
+				55281E741EF2CC3F0061C58B /* CategoriesViewController.swift in Sources */,
 				55147F6D1ED5BA3300724F86 /* SignUpViewController.swift in Sources */,
 				55147F7C1ED73A9900724F86 /* Helper.swift in Sources */,
 				55147F711ED64CB800724F86 /* UserCell.swift in Sources */,
@@ -547,6 +562,7 @@
 				55147F781ED6509300724F86 /* User.swift in Sources */,
 				55281E651EEA13CE0061C58B /* NewsFeedViewController.swift in Sources */,
 				55281E681EEB0B350061C58B /* Extensions.swift in Sources */,
+				55281E701EF1A1810061C58B /* TablesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

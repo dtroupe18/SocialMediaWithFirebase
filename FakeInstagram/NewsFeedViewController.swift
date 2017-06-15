@@ -19,11 +19,109 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
     var following = [String]()
     let ref = Database.database().reference()
     
+    // data being passed in 
+    var passedIndexPath = -1
+    var passedCategory: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchPosts()
+    
+        // determine what posts to fetch
+        if passedIndexPath != -1 {
+            // call fetchTablesPosts
+            fetchTablesPosts(tableNumber: passedIndexPath)
+        }
+        else if passedCategory != nil {
+            // call fetchCategoryPosts
+            fetchCategoryPosts(category: passedCategory!)
+        }
+        else {
+            fetchPosts()
+        }
+        
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 350; // Default Size
+    }
+    
+    func fetchCategoryPosts(category: String) {
+        // query firebase db "posts" -> posts:category for all posts with that category
+        self.ref.child("posts").queryOrderedByKey().observeSingleEvent(of: .value, with: { snap in
+            if let postsSnap = snap.value as? [String: AnyObject] {
+                for(_, post) in postsSnap {
+                    if let cat = post["category"] as? String {
+                        if cat == category {
+                            let posst = Post()
+                            
+                            if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let postDescription = post["postDescription"] as? String, let timestamp = post["timestamp"] as? Double, let category = post["category"] as? String, let group = post["group"] as? Int, let userID = post["userID"] as? String {
+                                
+                                posst.author = author
+                                posst.likes = likes
+                                posst.pathToImage = pathToImage
+                                posst.postID = postID
+                                posst.userID = userID
+                                posst.fancyPostDescription = self.createAttributedString(author: author, postText: postDescription)
+                                posst.postDescription = author + ": " + postDescription
+                                posst.timestamp = timestamp
+                                posst.group = group
+                                posst.category = category
+                                posst.userWhoPostedLabel = self.createAttributedPostLabel(username: author, table: group, category: category)
+                                
+                                if let people = post["peopleWhoLike"] as? [String: AnyObject] {
+                                    for(_, person) in people {
+                                        posst.peopleWhoLike.append(person as! String)
+                                    }
+                                }
+                                self.posts.append(posst)
+                            } // end if let
+                            
+                        }
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        })
+        ref.removeAllObservers()
+    }
+    
+    func fetchTablesPosts(tableNumber: Int) {
+        // query firebase db "posts" -> posts:group for all posts with group "tableNumber"
+        self.ref.child("posts").queryOrderedByKey().observeSingleEvent(of: .value, with: { snap in
+            if let postsSnap = snap.value as? [String: AnyObject] {
+                for(_, post) in postsSnap {
+                    if let groupNumber = post["group"] as? Int {
+                        print("If let passed GroupNumber: \(groupNumber)")
+                        if groupNumber == tableNumber {
+                                let posst = Post()
+                                
+                                if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let postDescription = post["postDescription"] as? String, let timestamp = post["timestamp"] as? Double, let category = post["category"] as? String, let group = post["group"] as? Int, let userID = post["userID"] as? String {
+                                    
+                                    posst.author = author
+                                    posst.likes = likes
+                                    posst.pathToImage = pathToImage
+                                    posst.postID = postID
+                                    posst.userID = userID
+                                    posst.fancyPostDescription = self.createAttributedString(author: author, postText: postDescription)
+                                    posst.postDescription = author + ": " + postDescription
+                                    posst.timestamp = timestamp
+                                    posst.group = group
+                                    posst.category = category
+                                    posst.userWhoPostedLabel = self.createAttributedPostLabel(username: author, table: group, category: category)
+                                    
+                                    if let people = post["peopleWhoLike"] as? [String: AnyObject] {
+                                        for(_, person) in people {
+                                            posst.peopleWhoLike.append(person as! String)
+                                        }
+                                    }
+                                    self.posts.append(posst)
+                                } // end if let
+                            
+                        }
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        })
+        ref.removeAllObservers()
     }
     
     func fetchPosts() {
@@ -54,7 +152,7 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
                                             if each == userID {
                                                 let posst = Post()
                                                 
-                                                if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let postDescription = post["postDescription"] as? String, let timestamp = post["timestamp"] as? Double, let category = post["category"] as? String, let group = post["group"] as? String {
+                                                if let author = post["author"] as? String, let likes = post["likes"] as? Int, let pathToImage = post["pathToImage"] as? String, let postID = post["postID"] as? String, let postDescription = post["postDescription"] as? String, let timestamp = post["timestamp"] as? Double, let category = post["category"] as? String, let group = post["group"] as? Int {
                                                     
                                                     posst.author = author
                                                     posst.likes = likes
@@ -98,7 +196,6 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return posts.count
     }
 
@@ -145,11 +242,6 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.timestamp.text = convertTimestamp(serverTimestamp: self.posts[indexPath.row].timestamp!)
         
         // place more button in post cell if the text is too long
-//        if  cell.postDescription.isTruncated() {
-//            cell.moreButton.isHidden = false
-//        }
-        
-        print(cell.postDescription.numberOfVisibleLines)
         if cell.postDescription.numberOfVisibleLines >= 2 {
             cell.moreButton.isHidden = false
         }
@@ -203,7 +295,7 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func createAttributedString(author: String, postText: String) -> NSMutableAttributedString {
-        let fullPostText = author + " " + postText
+        let fullPostText = author + ": " + postText
         let authorWordRange = (fullPostText as NSString).range(of: author)
         let attributedString = NSMutableAttributedString(string: fullPostText, attributes: [NSFontAttributeName : UIFont.systemFont(ofSize: 16)])
         attributedString.setAttributes([NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16), NSForegroundColorAttributeName : UIColor.black], range: authorWordRange)
@@ -211,22 +303,36 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         return attributedString
     }
     
-    func createAttributedPostLabel(username: String, table: String, category: String) -> NSMutableAttributedString {
-        
-        let string = username + " posted in " + table + ": " + category as NSString
+    func createAttributedPostLabel(username: String, table: Int, category: String) -> NSMutableAttributedString {
+        let tableAsString = "Table \(table)"
+        let string = username + " posted in " + tableAsString + ": " + category as NSString
         let attributedString = NSMutableAttributedString(string: string as String, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 16.0)])
         
         let boldFontAttribute = [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 16.0)]
         
         // Part of string to be bold
         attributedString.addAttributes(boldFontAttribute, range: string.range(of: username))
-        attributedString.addAttributes(boldFontAttribute, range: string.range(of: table))
+        attributedString.addAttributes(boldFontAttribute, range: string.range(of: tableAsString))
         attributedString.addAttributes(boldFontAttribute, range: string.range(of: category))
         
         return attributedString
     }
     
-
+    @IBAction func tablesPressed(_ sender: Any) {
+        DispatchQueue.main.async(execute: {
+            let storyboard: UIStoryboard = UIStoryboard(name: "Tables", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "TablesViewController")
+            self.show(vc, sender: self)
+        })
+    }
+    
+    
+    @IBAction func categoriesPressed(_ sender: Any) {
+        performSegue(withIdentifier: "toCategories", sender: nil)
+    }
+    
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

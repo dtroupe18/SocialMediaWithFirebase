@@ -30,8 +30,8 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     let categories: NSArray = ["Model Features", "Pathologies", "Anomalies"]
     
-    var group: String?
-    var category: String?
+    var group = -1
+    var category: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +40,9 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         if self.photo != nil {
             self.previewImage.image = photo
             self.selectImage.isHidden = true
+            self.nextButton.isHidden = false
+            group = -1
+            category = nil
         }
     }
 
@@ -75,7 +78,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     
     @IBAction func didPressNext(_ sender: Any) {
-        if group == nil {
+        if group == -1 {
             if let topController = UIApplication.topViewController() {
                 Helper.showAlertMessage(vc: topController, title: "Error", message: "You must select a group for your post")
             }
@@ -96,16 +99,6 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "goToUploadTwo" {
-            let controller = segue.destination as! UploadTwoViewController
-            controller.photo = previewImage.image
-            controller.category = category
-            controller.group = group
-        }
-    }
-    
-    
     // Group tableview setup
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -124,7 +117,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
         if tableView == self.tableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell")!
             cell.textLabel?.text = groups[indexPath.row] as? String
-            // group = groups[indexPath.row] as? String
+            group = indexPath.row + 1
             return cell
         }
         else {
@@ -136,10 +129,20 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.tableView {
-            group = groups[indexPath.row] as? String
+            group = indexPath.row + 1
         }
         else {
             category = categories[indexPath.row] as? String
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goToUploadTwo" {
+            let controller = segue.destination as! UploadTwoViewController
+            controller.photo = previewImage.image
+            controller.category = category
+            controller.group = group
+        }
+    }
+
 }

@@ -87,7 +87,25 @@ class UploadTwoViewController: UIViewController {
             })
         }
         uploadTask.resume()
-        performSegue(withIdentifier: "finishedPost", sender: nil)
+        
+        // delay segue until upload is complete
+        uploadTask.observe(.success) { (snapshot) in
+            //UI update method
+            print("Upload Completed")
+            self.segueToNewsfeed() // 6/15
+        }
+        
+        
+        // performSegue(withIdentifier: "finishedPost", sender: nil)
+    }
+    
+    func segueToNewsfeed() {
+        DispatchQueue.main.async {
+            // change to perform segue? super weird issue
+            let storyboard: UIStoryboard = UIStoryboard(name: "Feed", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Feed")
+            self.show(vc, sender: self)
+        }
     }
     
 

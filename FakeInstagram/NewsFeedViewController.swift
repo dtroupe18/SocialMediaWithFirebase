@@ -25,6 +25,10 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if posts.count > 0 {
+            self.tableView.reloadData()
+        }
     
         // determine what posts to fetch
         if passedIndexPath != -1 {
@@ -231,6 +235,8 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         // disables the ugly cell highlighting 
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         cell.userWhoPostedLabel.attributedText = posts[indexPath.row].userWhoPostedLabel
+        // added size to fit 6/15
+        cell.userWhoPostedLabel.sizeToFit()
 
         cell.helpfulLabel.text = "\(self.posts[indexPath.row].likes!) Helpful"
         cell.postID = self.posts[indexPath.row].postID
@@ -242,11 +248,15 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.timestamp.text = convertTimestamp(serverTimestamp: self.posts[indexPath.row].timestamp!)
         
         // place more button in post cell if the text is too long
-        if cell.postDescription.numberOfVisibleLines >= 2 {
+        // CONVERT TO ONE LINER?
+        let numberOfCharacters = cell.postDescription.text?.characters.count ?? 0
+        if numberOfCharacters > 90 {
             cell.moreButton.isHidden = false
         }
-        
-        
+        else {
+            // otherwise a resued cell will have the more button
+            cell.moreButton.isHidden = true
+        }
         // BUTTON CLICKS
         cell.moreTapAction = { (BetterPostCell) in
             self.posts[indexPath.row].isExpanded = !self.posts[indexPath.row].isExpanded
@@ -319,11 +329,11 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func tablesPressed(_ sender: Any) {
-        DispatchQueue.main.async(execute: {
+        DispatchQueue.main.async{
             let storyboard: UIStoryboard = UIStoryboard(name: "Tables", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "TablesViewController")
             self.show(vc, sender: self)
-        })
+        }
     }
     
     
@@ -331,7 +341,16 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         performSegue(withIdentifier: "toCategories", sender: nil)
     }
     
-    
+//    func performAsyncSegue(withIdentifier: String) {
+//        DispatchQueue.main.async(execute: {
+//            let vc = storyboard.instantiateViewController(withIdentifier: "TablesViewController")
+//            self.show(vc, sender: self)
+//        })
+//            
+//        
+//    }
+//    
+//    
     
     /*
     // Override to support conditional editing of the table view.

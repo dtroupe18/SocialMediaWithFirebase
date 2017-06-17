@@ -19,9 +19,10 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
     var following = [String]()
     let ref = Database.database().reference()
     
-    // data being passed in 
+    // data potentially being passed in
     var passedIndexPath = -1
     var passedCategory: String?
+    var justPosted = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,13 @@ class NewsFeedViewController: UIViewController, UITableViewDataSource, UITableVi
         else if passedCategory != nil {
             // call fetchCategoryPosts
             fetchCategoryPosts(category: passedCategory!)
+        }
+        else if justPosted {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                // do stuff 1.5 seconds later
+                self.fetchPosts()
+                self.justPosted = false
+            }
         }
         else {
             fetchPosts()

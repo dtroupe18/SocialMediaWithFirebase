@@ -82,7 +82,7 @@ class UploadTwoViewController: UIViewController {
                     
                     ref.child("posts").updateChildValues(postFeed)
                     AppDelegate.instance().dismissActivityIndicator()
-                    self.dismiss(animated: true, completion: nil)
+                    // self.dismiss(animated: true, completion: nil)
                 }
             })
         }
@@ -91,24 +91,12 @@ class UploadTwoViewController: UIViewController {
         // delay segue until upload is complete
         uploadTask.observe(.success) { (snapshot) in
             //UI update method
-            print("Upload Completed")
-            self.segueToNewsfeed() // 6/15
-        }
-        
-        
-        // performSegue(withIdentifier: "finishedPost", sender: nil)
-    }
-    
-    func segueToNewsfeed() {
-        DispatchQueue.main.async {
-            // change to perform segue? super weird issue
-            let storyboard: UIStoryboard = UIStoryboard(name: "Feed", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Feed")
-            self.show(vc, sender: self)
+            DispatchQueue.main.async(execute: {
+                self.performSegue(withIdentifier: "finishedPost", sender: nil)
+            });
         }
     }
     
-
     @IBAction func backPressed(_ sender: Any) {
         // this will have to send the information back as well?
         performSegue(withIdentifier: "backToUploadPost", sender: nil)
@@ -120,6 +108,10 @@ class UploadTwoViewController: UIViewController {
             controller.photo = photo
             controller.category = category
             controller.group = group
+        }
+        else if segue.identifier == "finishedPost" {
+            let controller = segue.destination as! NewsFeedViewController
+            controller.justPosted = true
         }
     }
 
